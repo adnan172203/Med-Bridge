@@ -41,11 +41,18 @@ export class AuthService {
 
   async signUp({
     name,
+    dateOfBirth,
+    gender,
     email,
-    password,
+    phone,
     address,
+    bloodType,
+    allergies,
+    emergencyContact,
+    currentMedications,
+    hasConsentedToTelehealth,
+    password,
     role,
-    phoneNumber,
   }: SignupDto) {
     const userExists = await this.userRepository.findOne({ where: { email } });
 
@@ -58,10 +65,17 @@ export class AuthService {
     const user = this.userRepository.create({
       name,
       email,
+      dateOfBirth,
+      gender,
       password: hashedPassword,
       address,
+      phone,
+      emergencyContact,
+      bloodType,
+      allergies,
+      currentMedications,
+      hasConsentedToTelehealth,
       role: role as Role,
-      phoneNumber,
     });
 
     const savedUser = await this.userRepository.save(user);

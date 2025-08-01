@@ -4,7 +4,11 @@ import {
   IsEmail,
   IsEnum,
   IsOptional,
+  IsDateString,
+  IsArray,
+  IsBoolean,
 } from 'class-validator';
+import { Gender } from 'src/users/enums/gender.enum';
 
 import { Role } from 'src/users/enums/role.enum';
 
@@ -13,15 +17,51 @@ export class SignupDto {
   @IsNotEmpty()
   name: string;
 
+  @IsDateString()
+  dateOfBirth: string;
+
+  @IsOptional()
+  @IsEnum(Gender)
+  gender?: Gender;
+
   @IsEmail()
   email: string;
 
   @IsString()
   password: string;
 
-  @IsString()
   @IsOptional()
-  address?: string;
+  emergencyContact?: {
+    name: string;
+    relationship: string;
+    phone: string;
+  };
+
+  @IsOptional()
+  address?: {
+    street: string;
+    city: string;
+    state: string;
+    postalCode: string;
+    country?: string; // Defaults to 'Australia'
+  };
+
+  @IsOptional()
+  @IsString()
+  bloodType?: string;
+
+  @IsOptional()
+  @IsArray()
+  allergies?: string[];
+
+  @IsOptional()
+  currentMedications?: Array<{
+    name: string;
+    dosage: string;
+  }>;
+
+  @IsBoolean()
+  hasConsentedToTelehealth: boolean;
 
   @IsEnum(Role)
   @IsOptional()
@@ -29,7 +69,7 @@ export class SignupDto {
 
   @IsString()
   @IsOptional()
-  phoneNumber?: string;
+  phone?: string;
 }
 
 export class SigninDto {
