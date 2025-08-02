@@ -1,3 +1,4 @@
+import { Transform } from 'class-transformer';
 import {
   IsString,
   IsNotEmpty,
@@ -18,7 +19,8 @@ export class SignupDto {
   name: string;
 
   @IsDateString()
-  dateOfBirth: string;
+  @Transform(({ value }) => new Date(value))
+  dateOfBirth: Date;
 
   @IsOptional()
   @IsEnum(Gender)
@@ -43,7 +45,7 @@ export class SignupDto {
     city: string;
     state: string;
     postalCode: string;
-    country?: string; // Defaults to 'Australia'
+    country: string; // Defaults to 'Australia'
   };
 
   @IsOptional()

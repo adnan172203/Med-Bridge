@@ -11,6 +11,8 @@ import { AuthenticationGuard } from './iam/authentication/guards/authentication.
 import { AccessTokenGuard } from './iam/authentication/guards/access-token.guard';
 import { RefreshTokenIdsStorage } from './iam/authentication/refresh-token-storage/refresh-token-ids.storage';
 import { RolesGuard } from './iam/authorization/guards/role.guard';
+import { UserManagementController } from './user-management/user-management.controller';
+import { UserManagementService } from './user-management/user-management.service';
 
 @Module({
   imports: [
@@ -28,9 +30,10 @@ import { RolesGuard } from './iam/authorization/guards/role.guard';
       useClass: RolesGuard,
     },
     AuthService,
+    UserManagementService,
     RefreshTokenIdsStorage,
     AccessTokenGuard,
   ],
-  controllers: [AuthController],
+  controllers: [AuthController, UserManagementController],
 })
 export class UsersModule {}
