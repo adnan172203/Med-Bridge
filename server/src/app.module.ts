@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { UsersModule } from './users/users.module';
+import { IdentityModule } from './identity/identity.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { User } from './users/entities/user.entity';
+import { User } from './identity/users/entities/user.entity';
 import { AppointmentsModule } from './appointments/appointments.module';
 
 @Module({
@@ -19,7 +19,7 @@ import { AppointmentsModule } from './appointments/appointments.module';
       entities: [User],
       synchronize: true, // Set to false in production
     }),
-    UsersModule,
+    IdentityModule,
     AppointmentsModule,
   ],
   controllers: [AppController],

@@ -9,9 +9,9 @@ import {
   IsArray,
   IsBoolean,
 } from 'class-validator';
-import { Gender } from 'src/users/enums/gender.enum';
+import { Gender } from 'src/identity/users/enums/gender.enum';
 
-import { Role } from 'src/users/enums/role.enum';
+import { Role } from 'src/identity/users/enums/role.enum';
 
 export class SignupDto {
   @IsString()
