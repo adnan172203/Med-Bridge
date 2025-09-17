@@ -6,8 +6,6 @@ import {
   IsEnum,
   IsOptional,
   IsDateString,
-  IsArray,
-  IsBoolean,
 } from 'class-validator';
 import { Gender } from 'src/identity/users/enums/gender.enum';
 
@@ -33,13 +31,6 @@ export class SignupDto {
   password: string;
 
   @IsOptional()
-  emergencyContact?: {
-    name: string;
-    relationship: string;
-    phone: string;
-  };
-
-  @IsOptional()
   address?: {
     street: string;
     city: string;
@@ -47,23 +38,6 @@ export class SignupDto {
     postalCode: string;
     country: string; // Defaults to 'Australia'
   };
-
-  @IsOptional()
-  @IsString()
-  bloodType?: string;
-
-  @IsOptional()
-  @IsArray()
-  allergies?: string[];
-
-  @IsOptional()
-  currentMedications?: Array<{
-    name: string;
-    dosage: string;
-  }>;
-
-  @IsBoolean()
-  hasConsentedToTelehealth: boolean;
 
   @IsEnum(Role)
   @IsOptional()

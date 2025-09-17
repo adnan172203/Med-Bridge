@@ -46,11 +46,6 @@ export class AuthService {
     email,
     phone,
     address,
-    bloodType,
-    allergies,
-    emergencyContact,
-    currentMedications,
-    hasConsentedToTelehealth,
     password,
     role,
   }: SignupDto) {
@@ -70,11 +65,6 @@ export class AuthService {
       password: hashedPassword,
       address,
       phone,
-      emergencyContact,
-      bloodType,
-      allergies,
-      currentMedications,
-      hasConsentedToTelehealth,
       role: role as Role,
     });
 

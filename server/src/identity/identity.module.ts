@@ -13,12 +13,14 @@ import { RefreshTokenIdsStorage } from './users/iam/authentication/refresh-token
 import { RolesGuard } from './users/iam/authorization/guards/role.guard';
 import { UserManagementController } from './users/user-management/user-management.controller';
 import { UserManagementService } from './users/user-management/user-management.service';
+import { PatientsModule } from './patients/patients.module';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([User]),
     JwtModule.registerAsync(jwtConfig.asProvider()),
     ConfigModule.forFeature(jwtConfig),
+    PatientsModule,
   ],
   providers: [
     {

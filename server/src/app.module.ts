@@ -4,6 +4,7 @@ import { AppService } from './app.service';
 import { IdentityModule } from './identity/identity.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from './identity/users/entities/user.entity';
+import { Patient } from './identity/patients/entities/patient.entity';
 import { AppointmentsModule } from './appointments/appointments.module';
 
 @Module({
@@ -16,7 +17,7 @@ import { AppointmentsModule } from './appointments/appointments.module';
       password: process.env.DB_PASSWORD,
       database: process.env.DB_DATABASE,
       autoLoadEntities: true,
-      entities: [User],
+      entities: [User, Patient],
       synchronize: true, // Set to false in production
     }),
     IdentityModule,

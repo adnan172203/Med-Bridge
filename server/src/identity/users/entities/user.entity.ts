@@ -4,11 +4,11 @@ import {
   Column,
   CreateDateColumn,
   UpdateDateColumn,
-  OneToMany,
-  BeforeInsert,
+  OneToOne,
 } from 'typeorm';
 import { Role } from '../enums/role.enum';
 import { Gender } from '../enums/gender.enum';
+import { Patient } from 'src/identity/patients/entities/patient.entity';
 
 // export enum UserRole {
 //   ADMIN = 'admin',
@@ -25,7 +25,7 @@ export class User {
   name: string;
 
   @Column({ type: 'date' })
-  dateOfBirth: Date; // Better than 'age' for accuracy
+  dateOfBirth: Date;
 
   @Column({
     type: 'enum',
@@ -33,6 +33,13 @@ export class User {
     default: Gender.UNSPECIFIED,
   })
   gender: Gender;
+
+  @Column({
+    type: 'enum',
+    enum: Role,
+    default: Role.PATIENT,
+  })
+  role: Role;
 
   // Contact Information
 
@@ -51,54 +58,20 @@ export class User {
     country: string; // Default: "Australia"
   };
 
-  // Medical Context
-  @Column({ type: 'text', nullable: true })
-  bloodType: string; // e.g., "O+"
-
-  @Column({ type: 'jsonb', default: [] })
-  allergies: string[]; // e.g., ["Penicillin", "Peanuts"]
-
-  @Column({ type: 'jsonb', default: [] })
-  currentMedications: {
-    name: string;
-    dosage: string;
-  }[];
-
-  // Emergency Contact
-  @Column({ type: 'jsonb', nullable: true })
-  emergencyContact: {
-    name: string;
-    relationship: string;
-    phone: string;
-  };
-
-  // Telehealth Specific
-  @Column({ default: false })
-  hasConsentedToTelehealth: boolean;
-
-  @Column({ type: 'timestamp', nullable: true })
-  consentSignedAt: Date;
-
-  @Column({
-    type: 'enum',
-    enum: Role,
-    default: Role.PATIENT,
-  })
-  role: Role;
-
+  // security
   @Column()
   password: string;
+
+  // Relations
+  // @OneToOne(() => Doctor, (doctor) => doctor.user)
+  // doctorProfile: Doctor;
+
+  @OneToOne(() => Patient, (patient) => patient.user)
+  patientProfile: Patient;
 
   @CreateDateColumn()
   createdAt: Date;
 
   @UpdateDateColumn()
   updatedAt: Date;
-
-  @BeforeInsert()
-  setConsentTimestamp() {
-    if (this.hasConsentedToTelehealth && !this.consentSignedAt) {
-      this.consentSignedAt = new Date();
-    }
-  }
 }
