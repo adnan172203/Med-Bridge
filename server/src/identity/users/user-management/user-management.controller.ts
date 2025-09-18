@@ -2,7 +2,7 @@ import { Body, Controller, Get, Param, Put } from '@nestjs/common';
 import { UserManagementService } from './user-management.service';
 import { UpdateUserDto } from './dto/user.management.dto';
 
-@Controller('patients')
+@Controller('users')
 export class UserManagementController {
   constructor(private readonly userManagementService: UserManagementService) {}
 

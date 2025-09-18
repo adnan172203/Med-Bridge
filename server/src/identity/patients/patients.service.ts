@@ -14,11 +14,6 @@ export class PatientsService {
   async create(createPatientDto: CreatePatientDto) {
     const { ...patientData } = createPatientDto;
 
-    // const user = await this.userRepository.findOne({ where: { id: userId } });
-    // if (!user) {
-    //   throw new NotFoundException(`User with id ${userId} not found`);
-    // }
-
     const patient = this.patientRepository.create({
       ...patientData,
     });
@@ -27,11 +22,21 @@ export class PatientsService {
   }
 
   findAll() {
-    return `This action returns all patients`;
+    return this.patientRepository.find({
+      relations: ['user'],
+    });
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} patient`;
+  async findOne(id: string) {
+    const patient = await this.patientRepository.findOne({
+      where: { id },
+      relations: ['user'],
+    });
+    if (!patient) {
+      throw new NotFoundException(`Patient #${id} not found`);
+    }
+
+    return patient;
   }
 
   update(id: number, updatePatientDto: UpdatePatientDto) {
